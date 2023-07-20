@@ -3,7 +3,6 @@ import path from "path";
 import { Configuration } from "webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ESLintWebpackPlugin from "eslint-webpack-plugin";
-import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -59,29 +58,14 @@ const baseConfig: Configuration = {
           loader: "babel-loader",
           options: {
             cacheDirectory: true,
-            cacheCompression: false,
-            // 设置JS的HMR
-            plugins: [isDevelopment && require.resolve("react-refresh/babel")],
+            cacheCompression: false
           },
         },
       },
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-            options: {
-              cacheDirectory: true,
-              cacheCompression: false,
-              // 设置JS的HMR
-              plugins: [
-                isDevelopment && require.resolve("react-refresh/babel"),
-              ],
-            },
-          },
-          "ts-loader",
-        ],
+        use: "ts-loader",
       },
     ],
   },
@@ -97,9 +81,7 @@ const baseConfig: Configuration = {
     }),
     new ESLintWebpackPlugin({
       context: path.resolve(__dirname, "../src"),
-    }),
-    // 设置JS的HMR
-    isDevelopment && new ReactRefreshWebpackPlugin(),
+    })
   ],
   optimization: {
     splitChunks: {

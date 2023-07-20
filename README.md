@@ -44,8 +44,8 @@ css-loade默认开启了css模块化，但是因为在ts文件中，可能出现
 css在style-loader默认是可以进行HMR的，但是JS还是不行，需要我们[手动处理](https://github.com/facebook/create-react-app/blob/main/packages/babel-preset-react-app/create.js)。
 但是因为是在react项目中，我们可以通过插件帮我们做这件事。
 
-- 在babel-loader的options下面添加plugins`[isDevelopment && require.resolve("react-refresh/babel")]`
-- plugins下`isDevelopment && new ReactRefreshWebpackPlugin(),`
+- plugins下`new ReactRefreshWebpackPlugin(),`
+- 注意：设置react的jsx和tsx的HMR，对于普通的ts/js文件依然没有HMR
 
 ## 6. 路由跳转刷新资源路径不存在导致的404
 配置路由跳转，当我们点击home路由时，再刷新浏览器，会请求/home路径下的资源，因为没有/home路径，因此会导致页面404。
@@ -53,4 +53,13 @@ css在style-loader默认是可以进行HMR的，但是JS还是不行，需要我
 - 解决：配置devServer的`historyApiFallback: true`，当页面出现404时，会自动返回index.html文件
 
 ## 7. lazy路由懒加载
+因为ts-loader只在你需要确保 tsconfig.json 的 compilerOptions 中 module 选项的值为 commonjs,否则 webpack 的运行会失败报错，因为 ts-node 不支持 commonjs 以外的其他模块规范。但是因为懒加载是在ES2020及以上版本才支持，因此，我们还是需要设置module 选项的值为 ES2020/ESNext，并且添加：
+```json
+"ts-node": {
+   "compilerOptions": {
+     "module": "CommonJS"
+   }
+ },
+```
+这样，只需要在react文件中，通过lazy和suspense就可以实现了。
 
