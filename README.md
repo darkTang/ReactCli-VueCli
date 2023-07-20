@@ -40,9 +40,17 @@ webpack配置文件用ts，webpack.config.ts。
 ## 4. css模块化（yarn add @types/css-modules -D）
 css-loade默认开启了css模块化，但是因为在ts文件中，可能出现无法识别`.module.css`的情况，因此我们需要在`tsconfig.json`文件中配置`types: ["css-modules"]`。
 
-## HMR（yarn add @pmmmwh/react-refresh-webpack-plugin react-refresh -D）
+## 5. HMR（yarn add @pmmmwh/react-refresh-webpack-plugin react-refresh -D）
 css在style-loader默认是可以进行HMR的，但是JS还是不行，需要我们[手动处理](https://github.com/facebook/create-react-app/blob/main/packages/babel-preset-react-app/create.js)。
 但是因为是在react项目中，我们可以通过插件帮我们做这件事。
 
 - 在babel-loader的options下面添加plugins`[isDevelopment && require.resolve("react-refresh/babel")]`
 - plugins下`isDevelopment && new ReactRefreshWebpackPlugin(),`
+
+## 6. 路由跳转刷新资源路径不存在导致的404
+配置路由跳转，当我们点击home路由时，再刷新浏览器，会请求/home路径下的资源，因为没有/home路径，因此会导致页面404。
+
+- 解决：配置devServer的`historyApiFallback: true`，当页面出现404时，会自动返回index.html文件
+
+## 7. lazy路由懒加载
+

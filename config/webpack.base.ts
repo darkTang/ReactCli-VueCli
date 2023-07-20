@@ -68,7 +68,20 @@ const baseConfig: Configuration = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: "ts-loader",
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true,
+              cacheCompression: false,
+              // 设置JS的HMR
+              plugins: [
+                isDevelopment && require.resolve("react-refresh/babel"),
+              ],
+            },
+          },
+          "ts-loader",
+        ],
       },
     ],
   },
