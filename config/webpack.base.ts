@@ -39,6 +39,10 @@ const baseConfig: Configuration = {
         ],
       },
       {
+        test: /\.less$/,
+        use: "less-loader",
+      },
+      {
         test: /\.(png|jpe?g|gif|svg|webp|bmp)$/,
         type: "asset", // 默认8kb
       },
@@ -58,7 +62,7 @@ const baseConfig: Configuration = {
           loader: "babel-loader",
           options: {
             cacheDirectory: true,
-            cacheCompression: false
+            cacheCompression: false,
           },
         },
       },
@@ -81,7 +85,7 @@ const baseConfig: Configuration = {
     }),
     new ESLintWebpackPlugin({
       context: path.resolve(__dirname, "../src"),
-    })
+    }),
   ],
   optimization: {
     splitChunks: {
