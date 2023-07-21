@@ -116,17 +116,40 @@ const baseConfig: Configuration = {
     splitChunks: {
       chunks: "all",
       cacheGroups: {
-        defaultVendors: {
-          // 组名
-          test: /[\\/]node_modules[\\/]/, // 需要打包到一起的模块
-          priority: -10, // 权重（越大越高）
-          reuseExistingChunk: true, // 如果当前chunk包含已从主bundle中拆分出的模块，则它将被重用，而不是生成新的模块
-          name: "node_modules-chunk", // 给打包后的js文件命名，默认为随机数字，这里的name会传给entry入口文件
+        // defaultVendors: {
+        //   // 组名
+        //   test: /[\\/]node_modules[\\/]/, // 需要打包到一起的模块
+        //   priority: -10, // 权重（越大越高）
+        //   reuseExistingChunk: true, // 如果当前chunk包含已从主bundle中拆分出的模块，则它将被重用，而不是生成新的模块
+        //   name: "node_modules-chunk", // 给打包后的js文件命名，默认为随机数字，这里的name会传给entry入口文件
+        // },
+        // ---------------------------------------
+        // react react-dom react-router-dom一起打包
+        react: {
+          test: /[\\/]node_modules[\\/]react(.*)?[\\/]/,
+          name: "react.chunk",
+          reuseExistingChunk: true,
+          priority: 40,
+        },
+        // antd单独打包
+        antd: {
+          test: /[\\/]node_modules[\\/]antd[\\/]/,
+          name: "antd.chunk",
+          reuseExistingChunk: true,
+          priority: 30,
+        },
+        // 剩下的node_modules单独打包
+        lib: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "lib.chunk",
+          reuseExistingChunk: true,
+          priority: 20,
         },
       },
     },
     runtimeChunk: true, // 是否生成对应的映射文件
   },
+  performance: false, // 关闭性能分支，提升打包速度
 };
 
 export default baseConfig;

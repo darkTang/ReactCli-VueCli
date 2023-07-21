@@ -70,3 +70,13 @@ css在style-loader默认是可以进行HMR的，但是JS还是不行，需要我
 - 方式2：通过`html-loader`将html解析为js模块，再通过assetModule解析。
 
 
+## 9. 优化打包
+因为可能会使用第三方库，导致node_modules体积很大，因此我们需要对node_modules中进行代码分割，但是注意不能拆太多，拆太多包需要多发请求。这里我们将
+- react react-dom react-router-dom一起打包
+- antd单独打包
+- 剩下的node_modules单独打包
+
+注意：这里一定注意优先级，优先级高先打包，node_modules优先级要低于其他两个包，包名会经过output的filename转换。
+
+## 10. 关闭性能分支，提升打包速度
+`performance: false`
