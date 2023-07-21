@@ -1,12 +1,3 @@
 {
-  "presets": [
-     "@babel/preset-env",
-     [
-        "@babel/preset-react",
-        {
-           "runtime": "automatic"
-        }
-     ],
-     "@babel/preset-typescript"
-  ]
+  "presets": ["react-app"] // 需要安装babel-preset-react-app
 }

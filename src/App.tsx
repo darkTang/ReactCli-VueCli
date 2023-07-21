@@ -1,15 +1,14 @@
-
-
 import React from "react";
 import { Suspense, lazy } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 // import Home from "./pages/Home";
 // import About from "./pages/About";
 
-// 路由懒加载
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import("./pages/About"));
-
+// 路由懒加载w
+const Home = lazy(() => import(/* webpackChunkName: "Home" */ "./pages/Home"));
+const About = lazy(
+  () => import(/* webpackChunkName: "About" */ "./pages/About")
+);
 
 function App() {
   return (

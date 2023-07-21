@@ -26,10 +26,11 @@ webpack配置文件用ts，webpack.config.ts。
 ## 1. Babel配置(yarn add babel-loader @babel/core babel-preset-react-app -D)
 配置Babel预设`react-app`，因为`react-app`内部已经集成了`@babel/preset-env`、`core-js`、`@babel/plugin-transform-runtime`、`@babel/preset-react`等插件。详见[babel-preset-react-app](https://github.com/facebook/create-react-app/blob/main/packages/babel-preset-react-app/create.js)
 
-- 注意：`babel-preset-react-app`此依赖需要配置环境变量才可以，因为该预设需要依赖环境变量，否则项目无法启动，
+- 注意：`babel-preset-react-app`此依赖需要配置环境变量才可以，因为该预设需要依赖环境变量，否则项目无法启动
 - 依赖的环境变量并不是代码运行的环境变量，而是babel依赖的环境变变量
 - `yarn add cross-env -D`
 - `cross-env NODE_ENV=development webpack serve --config ./config/webpack.dev.ts`
+- 补充：有时候不需要！！！
 
 ## 2. eslint配置(yarn add eslint-config-react-app -D)
 
@@ -51,6 +52,7 @@ css在style-loader默认是可以进行HMR的，但是JS还是不行，需要我
 配置路由跳转，当我们点击home路由时，再刷新浏览器，会请求/home路径下的资源，因为没有/home路径，因此会导致页面404。
 
 - 解决：配置devServer的`historyApiFallback: true`，当页面出现404时，会自动返回index.html文件
+- 打包上线时，可以用nginx来配置
 
 ## 7. lazy路由懒加载
 因为ts-loader只在你需要确保 tsconfig.json 的 compilerOptions 中 module 选项的值为 commonjs,否则 webpack 的运行会失败报错，因为 ts-node 不支持 commonjs 以外的其他模块规范。但是因为懒加载是在ES2020及以上版本才支持，因此，我们还是需要设置module 选项的值为 ES2020/ESNext，并且添加：
@@ -62,4 +64,9 @@ css在style-loader默认是可以进行HMR的，但是JS还是不行，需要我
  },
 ```
 这样，只需要在react文件中，通过lazy和suspense就可以实现了。
+
+## 8. 处理类似ico图标的静态文件（yarn add copy-webpack-plugin -D）
+- 方式1：通过`copy-webpack-plugin`直接将public文件夹中资源都复制到dist文件夹中。
+- 方式2：通过`html-loader`将html解析为js模块，再通过assetModule解析。
+
 
