@@ -68,20 +68,7 @@ const baseConfig: Configuration = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-            options: {
-              cacheDirectory: true,
-              cacheCompression: false,
-              // 设置JS的HMR
-              plugins: [
-                isDevelopment && require.resolve("react-refresh/babel"),
-              ],
-            },
-          },
-          "ts-loader",
-        ],
+        use: "ts-loader",
       },
     ],
   },
@@ -91,10 +78,10 @@ const baseConfig: Configuration = {
       filename: "index.html",
       inject: "body",
     }),
-    new MiniCssExtractPlugin({
-      filename: "css/[name].[hash].css",
-      chunkFilename: "css/[name].chunk.[hash:10].css",
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: "css/[name].[hash].css",
+    //   chunkFilename: "css/[name].chunk.[hash:10].css",
+    // }),
     new ESLintWebpackPlugin({
       context: path.resolve(__dirname, "../src"),
     }),
