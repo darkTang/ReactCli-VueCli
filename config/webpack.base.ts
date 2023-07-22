@@ -44,7 +44,6 @@ const baseConfig: Configuration = {
         use: [
           isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
-          "less-loader",
           {
             loader: "postcss-loader",
             options: {
@@ -53,6 +52,7 @@ const baseConfig: Configuration = {
               },
             },
           },
+          "less-loader"
         ],
       },
       {
